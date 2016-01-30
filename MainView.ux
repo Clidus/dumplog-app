@@ -1,0 +1,68 @@
+<App Theme="Basic" ClearColor="#200c50">
+    <iOS.StatusBarConfig Style="Light" />
+
+    <DockPanel>
+        <Style>
+            <Text TextColor="#ffffff" />
+            <TextInput PlaceholderColor="#ffffff80" TextColor="#ffffff" CaretColor="#ffffff" />
+        </Style>
+
+        <!-- Button colors -->
+        <float4 ux:Key="C600" ux:Value="#8869e5" />
+        <float4 ux:Key="C700" ux:Value="#6447b3" />
+        <float4 ux:Key="CFillFore" ux:Value="#644793" />
+
+        <StatusBarBackground Dock="Top" />
+        <BottomBarBackground Dock="Bottom" />
+
+        <JavaScript>
+            var Observable = require("FuseJS/Observable");
+
+            var username = Observable("");
+            var password = Observable("");
+
+            var areCredentialsValid = Observable(function() {
+                return username.value != "" && password.value != "";
+            });
+
+            var loginButtonClick = function () {
+                console.log("Button was clicked") ;
+
+                fetch("http://www.poo.com/auth/appLogin", {  
+                    method: 'post',
+                    body: '{"username":"' + username.value + '", "password":"' + password.value + '"}'//formData
+                })
+                .then(function (response) {
+                    console.log('Request succeeded with JSON response');
+
+                    // // Examine the text in the response  
+                    response.json().then(function (data) {
+                        console.log("Username: " + data.username);
+                    });
+                })
+                .catch(function (error) {
+                    console.log('Request failed', error);
+                });
+            }
+
+            module.exports = {
+                username: username,
+                password: password,
+                areCredentialsValid: areCredentialsValid,
+                loginButtonClick: loginButtonClick
+            };
+        </JavaScript>
+
+        <Grid Rows="1*,1*">
+            <StackPanel Alignment="VerticalCenter">
+                <Text Alignment="HorizontalCenter" FontSize="50">DumpLog</Text>
+                <Text Alignment="HorizontalCenter" Opacity=".5">Track your bowel movements on the go.</Text>
+            </StackPanel>
+            <StackPanel Alignment="VerticalCenter" Margin="50,0,50,0">
+                <TextInput PlaceholderText="username" Value="{username}" />
+                <TextInput PlaceholderText="password" IsPassword="true" Value="{password}" />
+                <Button Text="Log in" IsEnabled="{areCredentialsValid}" Clicked="{loginButtonClick}" />
+            </StackPanel>
+        </Grid>
+    </DockPanel>
+</App>
