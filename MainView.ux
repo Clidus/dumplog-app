@@ -20,6 +20,8 @@
 
             var username = Observable("");
             var password = Observable("");
+            var test = Observable("");
+            var test2 = Observable("");
 
             var areCredentialsValid = Observable(function() {
                 return username.value != "" && password.value != "";
@@ -28,7 +30,7 @@
             var loginButtonClick = function () {
                 console.log("Button was clicked") ;
 
-                fetch("http://www.poo.com/auth/appLogin", {  
+                fetch("http://www.dumplog.co.uk/auth/appLogin", {  
                     method: 'post',
                     body: '{"username":"' + username.value + '", "password":"' + password.value + '"}'//formData
                 })
@@ -37,11 +39,12 @@
 
                     // // Examine the text in the response  
                     response.json().then(function (data) {
-                        console.log("Username: " + data.username);
+                        test.value = "Username: " + data.username;
+                        test2.value = "Error: " + data.error;
                     });
                 })
                 .catch(function (error) {
-                    console.log('Request failed', error);
+                    alert('Request failed');
                 });
             }
 
@@ -49,7 +52,9 @@
                 username: username,
                 password: password,
                 areCredentialsValid: areCredentialsValid,
-                loginButtonClick: loginButtonClick
+                loginButtonClick: loginButtonClick,
+                test: test,
+                test2: test2
             };
         </JavaScript>
 
@@ -62,6 +67,8 @@
                 <TextInput PlaceholderText="username" Value="{username}" />
                 <TextInput PlaceholderText="password" IsPassword="true" Value="{password}" />
                 <Button Text="Log in" IsEnabled="{areCredentialsValid}" Clicked="{loginButtonClick}" />
+                <Text Alignment="HorizontalCenter" Opacity=".5" Value="{test}" />
+                <Text Alignment="HorizontalCenter" Opacity=".5" Value="{test2}" />
             </StackPanel>
         </Grid>
     </DockPanel>
