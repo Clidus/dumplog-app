@@ -1,7 +1,27 @@
 <DockPanel ux:Class="Feed">
-    <Grid Rows="1*,1*">
-        <StackPanel Alignment="VerticalCenter">
-            <Text Alignment="HorizontalCenter" FontSize="50">DumpFeed</Text>
+    <StackPanel Dock="Top">
+        <Text FontSize="28" Alignment="VerticalCenter" TextAlignment="Center" Padding="2" Value="DumpFeed" />
+        <Rectangle Height="1" Margin="0,3,0,0" Fill="#ffffff80" />
+    </StackPanel>
+
+    <Text ux:Class="Header" Margin="10,10,10,5" TextWrapping="Wrap" FontSize="22" />
+    <Text ux:Class="Article" Margin="10,0,10,0" TextWrapping="Wrap" FontSize="13" />
+    <Text ux:Class="PublishedDate" Margin="10,0,10,0" FontSize="13" TextColor="#999" />
+
+    <ScrollView>
+        <StackPanel Alignment="Top">
+            <Panel Height="7" />
+            <Each Items="{dataSource.responseData.feed.entries}">
+                <Panel ux:Class="HorizontalBar" Margin="46,10,0,10" 
+                        Alignment="VerticalCenter">
+                    <Rectangle Height="1" Fill="#dcdee3" />
+                </Panel>
+                
+                <Header Value="{title}" />
+                <Article Value="{content}" />
+                <PublishedDate Value="{publishedDate}" />
+                <HorizontalBar />
+            </Each>
         </StackPanel>
-    </Grid>
+    </ScrollView>
 </DockPanel>
