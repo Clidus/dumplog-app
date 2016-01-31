@@ -1,0 +1,7 @@
+<DockPanel ux:Class="Feed">
+    <Grid Rows="1*,1*">
+        <StackPanel Alignment="VerticalCenter">
+            <Text Alignment="HorizontalCenter" FontSize="50">DumpFeed</Text>
+        </StackPanel>
+    </Grid>
+</DockPanel>

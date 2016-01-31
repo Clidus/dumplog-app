@@ -15,10 +15,11 @@
                 </WhileDisabled>
             </Button>
         </Style>
-        
+
         <JavaScript>
             var Observable = require("FuseJS/Observable");
 
+            var activePage = Observable("Login");
             var username = Observable("");
             var password = Observable("");
             var errorMessage = Observable("");
@@ -43,7 +44,7 @@
                 .then(function(responseObject) {
                     console.log(JSON.stringify(responseObject));
                     if(responseObject.success) {
-                        errorMessage.value = "Success!";
+                        activePage.value = "Feed";
                     } else {
                         errorMessage.value = "Error: " + responseObject.errorMessage;
                     }
@@ -53,6 +54,7 @@
             }
 
             module.exports = {
+                activePage: activePage,
                 username: username,
                 password: password,
                 areCredentialsValid: areCredentialsValid,
@@ -61,17 +63,14 @@
             };
         </JavaScript>
 
-        <Grid Rows="1*,1*">
-            <StackPanel Alignment="VerticalCenter">
-                <Text Alignment="HorizontalCenter" FontSize="50">DumpLog</Text>
-                <Text Alignment="HorizontalCenter" Opacity=".5">Track your bowel movements on the go.</Text>
-            </StackPanel>
-            <StackPanel Alignment="VerticalCenter" Margin="50,0,50,0">
-                <TextInput PlaceholderText="username" Value="{username}" />
-                <TextInput PlaceholderText="password" IsPassword="true" Value="{password}" />
-                <PooButton Text="Login" IsEnabled="{areCredentialsValid}" Clicked="{loginButtonClick}" />
-                <Text Alignment="HorizontalCenter" Opacity=".5" Value="{errorMessage}" />
-            </StackPanel>
-        </Grid>
+        <PageControl Active="{activePage}">
+            <Page Name="Login">
+                <Login />
+            </Page>
+
+            <Page Name="Feed">
+                <Feed />
+            </Page>
+        </PageControl>
     </DockPanel>
 </App>

@@ -1,0 +1,14 @@
+<DockPanel ux:Class="Login">
+	<Grid Rows="1*,1*">
+		<StackPanel Alignment="VerticalCenter">
+			<Text Alignment="HorizontalCenter" FontSize="50">DumpLog</Text>
+			<Text Alignment="HorizontalCenter" Opacity=".5">Track your bowel movements on the go.</Text>
+		</StackPanel>
+		<StackPanel Alignment="VerticalCenter" Margin="50,0,50,0">
+			<TextInput PlaceholderText="username" Value="{username}" />
+			<TextInput PlaceholderText="password" IsPassword="true" Value="{password}" />
+			<PooButton Text="Login" IsEnabled="{areCredentialsValid}" Clicked="{loginButtonClick}" />
+			<Text Alignment="HorizontalCenter" Opacity=".5" Value="{errorMessage}" />
+		</StackPanel>
+	</Grid>
+</DockPanel>
