@@ -20,31 +20,29 @@
 
             var username = Observable("");
             var password = Observable("");
-            var test = Observable("");
-            var test2 = Observable("");
+            var errorMessage = Observable("");
 
             var areCredentialsValid = Observable(function() {
                 return username.value != "" && password.value != "";
             });
 
             var loginButtonClick = function () {
-                console.log("Button was clicked") ;
+                var body = { "username" : username.value, "password" : password.value };
 
                 fetch("http://www.dumplog.co.uk/auth/appLogin", {  
                     method: 'post',
-                    body: '{"username":"' + username.value + '", "password":"' + password.value + '"}'//formData
+                    body: JSON.stringify(body),
+                    headers: new Headers({
+                        'Content-Type': 'application/json'
+                    })
                 })
-                .then(function (response) {
-                    console.log('Request succeeded with JSON response');
-
-                    // // Examine the text in the response  
-                    response.json().then(function (data) {
-                        test.value = "Username: " + data.username;
-                        test2.value = "Error: " + data.error;
-                    });
+                .then(function(response) { 
+                    return response.json(); 
                 })
-                .catch(function (error) {
-                    alert('Request failed');
+                .then(function(responseObject) {
+                    errorMessage.value = "Error: " + responseObject.error;
+                }).catch(function (err) {
+                    debug_log('Error: ' + err);
                 });
             }
 
@@ -53,8 +51,7 @@
                 password: password,
                 areCredentialsValid: areCredentialsValid,
                 loginButtonClick: loginButtonClick,
-                test: test,
-                test2: test2
+                errorMessage: errorMessage
             };
         </JavaScript>
 
@@ -67,8 +64,7 @@
                 <TextInput PlaceholderText="username" Value="{username}" />
                 <TextInput PlaceholderText="password" IsPassword="true" Value="{password}" />
                 <Button Text="Log in" IsEnabled="{areCredentialsValid}" Clicked="{loginButtonClick}" />
-                <Text Alignment="HorizontalCenter" Opacity=".5" Value="{test}" />
-                <Text Alignment="HorizontalCenter" Opacity=".5" Value="{test2}" />
+                <Text Alignment="HorizontalCenter" Opacity=".5" Value="{errorMessage}" />
             </StackPanel>
         </Grid>
     </DockPanel>
