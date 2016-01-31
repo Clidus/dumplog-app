@@ -40,7 +40,12 @@
                     return response.json(); 
                 })
                 .then(function(responseObject) {
-                    errorMessage.value = "Error: " + responseObject.error;
+                    console.log(JSON.stringify(responseObject));
+                    if(responseObject.success) {
+                        errorMessage.value = "Success!";
+                    } else {
+                        errorMessage.value = "Error: " + responseObject.errorMessage;
+                    }
                 }).catch(function (err) {
                     debug_log('Error: ' + err);
                 });
