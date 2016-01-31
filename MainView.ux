@@ -4,8 +4,15 @@
         <Style>
             <Text TextColor="#ffffff" />
             <TextInput PlaceholderColor="#ffffff80" TextColor="#ffffff" CaretColor="#ffffff" />
-            <Button ux:InheritStyle="false" Background="#674C1B" Name="self" Margin="0,0,0,4" Padding="20,7,20,7">
-                <Fuse.BasicTheme.ButtonText TextColor="#FFF" Value="{Property self.Text}" TextAlignment="Center" />
+            <Button ux:Class="PooButton" IgnoreStyle="true" ClipToBounds="false" Margin="0,0,0,4" Padding="20,7,20,7" Name="self">
+                <Fuse.BasicTheme.ButtonText ux:Name="buttonText" TextColor="#fff" Value="{Property self.Text}" TextAlignment="Center" />
+                <Rectangle Layer="Background">
+                    <SolidColor ux:Name="buttonBg" Color="#AB5A23"/>
+                </Rectangle>
+                <WhileDisabled>
+                    <Change buttonBg.Color="#54310B" Duration="0.3" Easing="CircularIn"/>
+                    <Change buttonText.TextColor="#ffffff80" Duration="0.3" Easing="CircularIn"/>
+                </WhileDisabled>
             </Button>
         </Style>
         
@@ -62,7 +69,7 @@
             <StackPanel Alignment="VerticalCenter" Margin="50,0,50,0">
                 <TextInput PlaceholderText="username" Value="{username}" />
                 <TextInput PlaceholderText="password" IsPassword="true" Value="{password}" />
-                <Button Text="Log in" IsEnabled="{areCredentialsValid}" Clicked="{loginButtonClick}" />
+                <PooButton Text="Login" IsEnabled="{areCredentialsValid}" Clicked="{loginButtonClick}" />
                 <Text Alignment="HorizontalCenter" Opacity=".5" Value="{errorMessage}" />
             </StackPanel>
         </Grid>
