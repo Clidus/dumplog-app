@@ -1,5 +1,14 @@
-<App Theme="Basic">
+<App Theme="Basic" ClearColor="#35240F">
+    <iOS.StatusBarConfig Style="Light" />
     <DockPanel>
+        <Style>
+            <Text TextColor="#ffffff" />
+            <TextInput PlaceholderColor="#ffffff80" TextColor="#ffffff" CaretColor="#ffffff" />
+            <Button ux:InheritStyle="false" Background="#674C1B" Name="self" Margin="0,0,0,4" Padding="20,7,20,7">
+                <Fuse.BasicTheme.ButtonText TextColor="#FFF" Value="{Property self.Text}" TextAlignment="Center" />
+            </Button>
+        </Style>
+        
         <JavaScript>
             var Observable = require("FuseJS/Observable");
 
