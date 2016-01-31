@@ -1,20 +1,5 @@
-<App Theme="Basic" ClearColor="#200c50">
-    <iOS.StatusBarConfig Style="Light" />
-
+<App Theme="Basic">
     <DockPanel>
-        <Style>
-            <Text TextColor="#ffffff" />
-            <TextInput PlaceholderColor="#ffffff80" TextColor="#ffffff" CaretColor="#ffffff" />
-        </Style>
-
-        <!-- Button colors -->
-        <float4 ux:Key="C600" ux:Value="#8869e5" />
-        <float4 ux:Key="C700" ux:Value="#6447b3" />
-        <float4 ux:Key="CFillFore" ux:Value="#644793" />
-
-        <StatusBarBackground Dock="Top" />
-        <BottomBarBackground Dock="Bottom" />
-
         <JavaScript>
             var Observable = require("FuseJS/Observable");
 
