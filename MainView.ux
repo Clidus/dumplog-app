@@ -17,6 +17,7 @@
         </Style>
 
         <JavaScript>
+            var Storage = require('FuseJS/Storage');
             var Observable = require("FuseJS/Observable");
 
             var activePage = Observable("Login");
@@ -29,8 +30,8 @@
             });
 
             var loginButtonClick = function () {
+                // send login credentials to server
                 var body = { "username" : username.value, "password" : password.value };
-
                 fetch("http://www.dumplog.co.uk/auth/appLogin", {  
                     method: 'post',
                     body: JSON.stringify(body),
@@ -38,19 +39,35 @@
                         'Content-Type': 'application/json'
                     })
                 })
-                .then(function(response) { 
+                .then(function(response) {
                     return response.json(); 
                 })
                 .then(function(responseObject) {
-                    console.log(JSON.stringify(responseObject));
+                    debug_log(JSON.stringify(responseObject));
+
+                    // if login successful
                     if(responseObject.success) {
-                        activePage.value = "Feed";
+                        // save UserID hash
+                        if(saveUser(responseObject.userID)) {
+                            // change page to activity feed
+                            activePage.value = "Feed";
+                        } else {
+                            errorMessage.value = "Error: Failed to save user data.";
+                        }
                     } else {
                         errorMessage.value = "Error: " + responseObject.errorMessage;
                     }
                 }).catch(function (err) {
                     debug_log('Error: ' + err);
                 });
+            }
+
+            var saveUser = function (username) {
+                return Storage.writeSync("user.txt", username);
+            }
+
+            var readUser = function () {
+                return Storage.readSync("user.txt");
             }
 
             module.exports = {
