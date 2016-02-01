@@ -1,6 +1,6 @@
 <DockPanel ux:Class="Feed">
     <StackPanel Dock="Top">
-        <Text FontSize="28" Alignment="VerticalCenter" TextAlignment="Center" Padding="2" Value="DumpFeed" />
+        <Text FontSize="28" Alignment="VerticalCenter" TextAlignment="Center" Padding="2" Value="DumpLog" />
         <Rectangle Height="1" Margin="0,3,0,0" Fill="#ffffff80" />
     </StackPanel>
 
